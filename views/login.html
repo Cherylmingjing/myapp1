@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Where are you from?</title>
+<link rel="stylesheet" href="static/css/commonstyle.css" />
+<script type="text/javascript" src="static/js/jquery.min.js"></script>
+<script type="text/javascript">
+	var initArr = [0,0,0,0,0,0,0,0];
+	function likeFun(index){
+		if(initArr[index] == 0){
+			$("#id"+index).css("color","red");
+			initArr[index] =1;		
+		}else{
+			$("#id"+index).css("color","black");
+			initArr[index] =0;		
+		}
+	}
+	
+	function doneFun(){
+		var val=$('#radioId').find('input:radio[name="Demography"]:checked').val();
+		if(val==undefined){
+			alert("Please choose one demography at least");
+			return false;
+		}else{
+			var param = initArr.toString();
+			if(param == '0,0,0,0,0,0,0,0'){
+				alert('Please choose at least one food');
+				return false;
+			}else{
+				$.ajax({
+					type:"POST",
+					dataType: "json",
+					data:{
+						type:val,
+						param:param
+					},
+					url:"onSumbit",
+					success:function(data){
+						if(data.status=="success"){
+							location.href = 'index.html';						
+						}
+					}
+				});
+			}
+		}
+	}
+	
+	function showFun(){
+		$("#picId").css('display','block'); 
+	}
+	
+	$(document).keyup(function(event) {
+		if (event.keyCode == 13)
+			doneFun();
+	});
+</script>
+</head>
+<body>
+	<div class="mainDiv">
+  		<div class="textDiv">
+			<span class="baseTitle1">
+				Where are you from?
+			</span>
+			<br>
+			<span class="baseTitle1">
+				Demography
+			</span>
+			<br>
+		</div>
+  		<div id="radioId" class="subDiv">
+			<input onclick="showFun();" type="radio" name="Demography" value="Asia" /><span class="baseTitle1">Asia</span>&nbsp;&nbsp;
+			<input onclick="showFun();" type="radio" name="Demography" value="US" /><span class="baseTitle1">US</span>&nbsp;&nbsp;
+			<input onclick="showFun();" type="radio" name="Demography" value="Mexico" /><span class="baseTitle1">Mexico</span>&nbsp;&nbsp;
+			<input onclick="showFun();" type="radio" name="Demography" value="Europe" /><span class="baseTitle1">Europe</span>&nbsp;&nbsp;
+		</div>
+		<div id="picId" class="picDiv" style="display: none;">
+			<!-- picture -->
+			<div id="imgDivId1">
+				<div>
+					<img src="static/image/Asia1.jpg" width="200px" height="190px">
+				</div>
+				<div>
+					<img src="static/image/Asia2.jpg" width="200px" height="190px">
+				</div>
+				<div>
+					<img src="static/image/Europe1.jpg" width="200px" height="190px">
+				</div>
+				<div>
+					<img src="static/image/Europe2.jpg" width="200px" height="190px">
+				</div>
+			</div>
+			<!-- button -->
+			<div class="btnDiv">
+				<div>
+					<input id="id0" type="button" onclick="likeFun(0);" value="like"/>
+				</div>
+				<div>
+					<input id="id1" type="button" onclick="likeFun(1);" value="like"/>
+				</div>
+				<div>
+					<input id="id2" type="button" onclick="likeFun(2);" value="like"/>
+				</div>
+				<div>
+					<input id="id3" type="button" onclick="likeFun(3);" value="like"/>
+				</div>
+			</div>
+			<!-- picture -->
+			<div id="imgDivId2">
+				<div>
+					<img src="static/image/Mexican1.jpg" width="200px" height="190px">
+				</div>
+				<div>
+					<img src="static/image/Mexican2.jpg" width="200px" height="190px">
+				</div>
+				<div>
+					<img src="static/image/US1.jpg" width="200px" height="190px">
+				</div>
+				<div>
+					<img src="static/image/US2.jpg" width="200px" height="190px">
+				</div>
+			</div>
+			<!-- button -->
+			<div class="btnDiv">
+				<div>
+					<input id="id4" type="button" onclick="likeFun(4);" value="like"/>
+				</div>
+				<div>
+					<input id="id5" type="button" onclick="likeFun(5);" value="like"/>
+				</div>
+				<div>
+					<input id="id6" type="button" onclick="likeFun(6);" value="like"/>
+				</div>
+				<div>
+					<input id="id7" type="button" onclick="likeFun(7);" value="like"/>
+				</div>
+			</div>
+			<div class="doneDiv">
+				<input type="button" onclick="doneFun();" value="Done">
+			</div>
+		</div>
+  	</div>
+</body>
+</html>

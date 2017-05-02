@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Where are you from?</title>
+<link rel="stylesheet" href="static/css/commonstyle.css" />
+<link href="https://fonts.googleapis.com/css?family=Bungee+Inline" rel="stylesheet">
+<script type="text/javascript" src="static/js/jquery.min.js"></script>
+<script type="text/javascript">
+	var initArr = [0,0,0,0,0,0,0,0];
+	function likeFun(index){
+		if(initArr[index] == 0){
+			$("#id"+index).css("color","red");
+			initArr[index] =1;
+		}else{
+			$("#id"+index).css("color","black");
+			initArr[index] =0;
+		}
+	}
+
+	function doneFun(){
+		var val=$('#radioId').find('input:radio[name="Demography"]:checked').val();
+		if(val==undefined){
+			alert("Please choose one demography at least");
+			return false;
+		}else{
+			var param = initArr.toString();
+			if(param == '0,0,0,0,0,0,0,0'){
+				alert('Please choose at least one food');
+				return false;
+			}else{
+
+				var UsArr = [0,0,0,0];
+				var MexicoArr = [0,0,0,0];
+				var AsiaArr = [0,0,0,0];
+				var EuropeArr = [0,0,0,0];
+
+				var USStr = localStorage.getItem("US");
+				var MexicoStr = localStorage.getItem("Mexico");
+				var AsiaStr = localStorage.getItem("Asia");
+				var EuropeStr = localStorage.getItem("Europe");
+
+				if(AsiaStr != null){
+					AsiaArr = AsiaStr.split(",");
+				}
+				if(USStr != null){
+					UsArr = USStr.split(",");
+				}
+				if(MexicoStr != null){
+					MexicoArr = MexicoStr.split(",");
+				}
+				if(EuropeStr != null){
+					EuropeArr = EuropeStr.split(",");
+				}
+
+				var index = 0;
+				if(val == 'Mexico'){
+					index = 1;
+				}else if(val == 'Asia'){
+					index = 2;
+				}else if(val == 'Europe'){
+					index = 3;
+				}
+
+				var parmArr = ['Asia1','Asia2','Europe1','Europe2','Mexican1','Mexican2','US1','US2'];
+				var resu = param.split(',');
+				for(var i=0;i<resu.length;i++){
+					if(resu[i] == 1){
+						var cur = parmArr[i];
+						if(cur == 'US1' || cur == 'US2'){
+							UsArr[index]++;
+						}else if(cur == 'Mexican1' || cur == 'Mexican2'){
+							MexicoArr[index]++;
+						}else if(cur == 'Asia1' || cur == 'Asia2'){
+							AsiaArr[index]++;
+						}else {
+							EuropeArr[index]++;
+						}
+					}
+				}
+				localStorage.setItem("US",UsArr);
+				localStorage.setItem("Mexico",MexicoArr);
+				localStorage.setItem("Asia",AsiaArr);
+				localStorage.setItem("Europe",EuropeArr);
+				location.href = 'data.html';
+			}
+		}
+	}
+
+	function showFun(){
+		$("#picId").css('display','block');
+	}
+
+	$(document).keyup(function(event) {
+		if (event.keyCode == 13)
+			doneFun();
+	});
+</script>
+</head>
+<body>
+	<div class="mainDiv">
+  		<div class="textDiv">
+			<span class="baseTitle1">
+				Where are you from?
+			</span>
+		</div>
+  		<div id="radioId" class="subDiv">
+			<input onclick="showFun();" type="radio" name="Demography" value="Asia" /><span class="baseTitle1">Asia</span>&nbsp;&nbsp;
+			<input onclick="showFun();" type="radio" name="Demography" value="US" /><span class="baseTitle1">US</span>&nbsp;&nbsp;
+			<input onclick="showFun();" type="radio" name="Demography" value="Mexico" /><span class="baseTitle1">Mexico</span>&nbsp;&nbsp;
+			<input onclick="showFun();" type="radio" name="Demography" value="Europe" /><span class="baseTitle1">Europe</span>&nbsp;&nbsp;
+		</div>
+		<div id="picId" class="picDiv" style="display: none;">
+			<!-- picture -->
+			<div id="imgDivId1">
+				<div>
+					<img src="static/image/Asia1.jpg" width="230px" height="190px">
+				</div>
+				<div>
+					<img src="static/image/Asia2.jpg" width="230px" height="190px">
+				</div>
+				<div>
+					<img src="static/image/Europe1.jpg" width="230px" height="190px">
+				</div>
+				<div>
+					<img src="static/image/Europe2.jpg" width="230px" height="190px">
+				</div>
+			</div>
+			<!-- button -->
+			<div class="btnDiv">
+				<div>
+					<input id="id0" type="button" onclick="likeFun(0);" value="like"/>
+				</div>
+				<div>
+					<input id="id1" type="button" onclick="likeFun(1);" value="like"/>
+				</div>
+				<div>
+					<input id="id2" type="button" onclick="likeFun(2);" value="like"/>
+				</div>
+				<div>
+					<input id="id3" type="button" onclick="likeFun(3);" value="like"/>
+				</div>
+			</div>
+			<!-- picture -->
+			<div id="imgDivId2">
+				<div>
+					<img src="static/image/Mexican1.jpg" width="230px" height="190px">
+				</div>
+				<div>
+					<img src="static/image/Mexican2.jpg" width="230px" height="190px">
+				</div>
+				<div>
+					<img src="static/image/US1.jpg" width="230px" height="190px">
+				</div>
+				<div>
+					<img src="static/image/US2.jpg" width="230px" height="190px">
+				</div>
+			</div>
+			<!-- button -->
+			<div class="btnDiv">
+				<div>
+					<input id="id4" type="button" onclick="likeFun(4);" value="like"/>
+				</div>
+				<div>
+					<input id="id5" type="button" onclick="likeFun(5);" value="like"/>
+				</div>
+				<div>
+					<input id="id6" type="button" onclick="likeFun(6);" value="like"/>
+				</div>
+				<div>
+					<input id="id7" type="button" onclick="likeFun(7);" value="like"/>
+				</div>
+			</div>
+			<div class="doneDiv">
+				<input type="button" onclick="doneFun();" value="Done">
+			</div>
+		</div>
+  	</div>
+</body>
+</html>
