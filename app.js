@@ -11,6 +11,52 @@ var data = require('./routes/data');
 
 var app = express();
 
+var mongoose = require('mongoose');
+
+var mongodb = require('mongodb');
+var MongoClient = mongodb.MongoClient;
+
+var MONGODB_URL = process.env.MONGODB_URL ||'mongodb://cheryl_mingjing:woaigaimima123@ds127801.mlab.com:27801/cherylmingjing';
+mongoose.connect(MONGODB_URL);
+var db;
+
+ongoClient.connect('mongodb://cheryl_mingjing:woaigaimima123@ds127801.mlab.com:27801/cherylmingjing', (err, database) => {
+  if (err) return console.log(err)
+  db = database
+})
+
+var MongoClient = require('mongodb').MongoClient;
+MongoClient.connect('mongodb://cherylmingjing:woaigaimima123@ds127801.mlab.com:27801/cherylmingjing')
+
+var uri = "mongodb://cherylmingjing:woaigaimima123@ds127801.mlab.com:27801/cherylmingjing";
+MongoClient.connect(uri, function(err, db) {
+  db.close();
+});
+
+var Schema = mongoose.Schema;
+var uN = String;
+
+var userSchema = new Schema ({
+  userID: String
+})
+
+var questionSchema = new Schema ({
+  question: [{}],
+  answers: [{}]
+})
+
+var testSchema = new Schema({
+    username: String,
+    testName: String,
+    questions: [],
+    answers: [],
+    correct: []
+});
+
+var User = mongoose.model('User', userSchema);
+var Test = mongoose.model('Test', testSchema);
+var Question = mongoose.model('Question', questionSchema);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 //app.set('view engine', 'pug');
